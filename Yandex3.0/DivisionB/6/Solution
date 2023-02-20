@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <list>
+using namespace std;
+
+int main()
+{
+    //Input/////////////////////////////////////////////////////
+    std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	std::cout.tie(0);
+
+	list<pair <int, int>> clusters;
+	int sectors, m;
+	cin >> m >> sectors;
+
+	int buff1, buff2;
+	/*cin >> buff1 >> buff2;
+	clusters.push_front({ buff1, buff2 });*/
+
+	for (size_t i = 0; i < sectors; i++)
+	{
+		cin >> buff1 >> buff2;
+		for (list<pair <int, int>>::iterator it = clusters.begin(); it != clusters.end();)
+		{
+			if (!(buff1 > it->second) && !(it->first > buff2)) {
+				it = clusters.erase(it);
+				//cout << "deleting " << it->first << " " << it->second << '\n';
+			}
+			else
+				++it;
+		}
+		clusters.push_front({ buff1, buff2 });
+	}
+
+	//for (auto& i : clusters)
+	//{
+	//	cout << "{" << i.first << ", " << i.second << "}\n";
+	//}
+	cout << clusters.size();
+}
