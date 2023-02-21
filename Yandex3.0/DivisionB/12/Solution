@@ -1,0 +1,50 @@
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+bool equals_closing(char incoming) {
+	char arr[]{ ')',']','}' };
+	for (int i = 0; i < 3; i++) {
+		if (incoming == arr[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+int main()
+{
+ ////Input/////////////////////////////////////////////////////
+    std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	std::cout.tie(0);
+	
+	stack<char> stack;
+
+	string braces;
+	cin >> braces;
+
+	for (auto& incoming : braces)
+	{
+		if (equals_closing(incoming)) {
+			if (!stack.empty() && (incoming - stack.top() == 1 || incoming - stack.top() == 2))
+				stack.pop();
+			else {
+				cout << "no";
+				return 0;
+			}
+		}
+		else
+			stack.push(incoming);
+	}
+
+	if (stack.empty()) {
+		cout << "yes";
+	}
+	else
+	{
+		cout << "no";
+	}
+}
