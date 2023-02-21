@@ -1,0 +1,51 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+int ans[100100]{};
+
+int main()
+{
+ ////Input/////////////////////////////////////////////////////
+    std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	std::cout.tie(0);
+	
+	stack<pair<int, int>> stack;
+
+	int n;
+	cin >> n;
+
+	pair<int, int> buff{ 0, 0 };
+	cin >> buff.second;
+	stack.push(buff);
+
+	for (size_t i = 1; i < n; i++)
+	{
+		buff.first = i;
+		cin >> buff.second;
+
+		if (buff.second < stack.top().second) {
+			while (!stack.empty() && buff.second < stack.top().second) {
+				ans[stack.top().first] = buff.first;
+				stack.pop();
+			}
+			stack.push(buff);
+		}
+		else
+		{
+			stack.push(buff);
+		}
+	}
+	while (!stack.empty())
+	{
+		ans[stack.top().first] = -1;
+		stack.pop();
+	}
+	
+	for (size_t i = 0; i < n; i++)
+	{
+		cout << ans[i] << " ";
+	}
+}
