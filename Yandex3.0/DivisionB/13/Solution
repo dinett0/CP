@@ -1,0 +1,59 @@
+#include <iostream>
+#include <algorithm>
+#include <stack>
+#include <string>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+ ////Input/////////////////////////////////////////////////////
+    std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	std::cout.tie(0);
+	
+	ifstream finput("input.txt");
+
+	stack<int> stack;
+	vector<string> input;
+
+	string buff;
+	while (finput >> buff)
+	{
+		input.push_back(buff);
+	}
+
+	for (auto& i : input)
+	{
+		if (!isdigit(i[0])) {
+			if (stack.size() >= 2) {
+				int first = stack.top();
+				stack.pop();
+				int second = stack.top();
+				stack.pop();
+
+				if (i == "+")
+				{
+					stack.push(first + second);
+				}
+				else if (i == "-") {
+					stack.push(second - first);
+				}
+				else
+				{
+					stack.push(first * second);
+				}
+			}
+			else {
+				return 0;
+			}
+		}
+		else
+		{
+			stack.push(stoi(i));
+		}
+	}
+
+	cout << stack.top();
+}
