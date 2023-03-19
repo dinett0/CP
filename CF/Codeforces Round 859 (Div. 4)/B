@@ -1,0 +1,48 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+    int n;
+    cin >> n;
+
+    vector<string> ans;
+    
+	for (size_t i = 0; i < n; i++)
+	{
+		int n2;
+		cin >> n2;
+		int even{}, uneven{};
+
+		for (size_t i = 0; i < n2; i++)
+		{
+			int buff;
+			cin >> buff;
+			if (buff % 2 == 0)
+			{
+				even += buff;
+			}
+			else
+			{
+				uneven += buff;
+			}
+		}
+
+		if (even > uneven)
+		{
+			ans.push_back("YES");
+		}
+		else
+		{
+			ans.push_back("NO");
+		}
+	}
+	for (auto& i : ans)
+	{
+		cout << i << '\n';
+	}
+}
