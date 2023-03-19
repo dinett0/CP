@@ -1,0 +1,66 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+    int QUERIS;
+    cin >> QUERIS;
+	vector <string> ans;
+
+    for (size_t i = 0; i < QUERIS; i++)
+    {
+        int size, queris;
+        cin >> size >> queris;
+        vector<int> vec(1);
+        cin >> vec[0];
+        for (int i = 1; i < size; i++)
+        {
+            int buff;
+            cin >> buff;
+            vec.push_back(buff + vec[i - 1]);
+        }
+
+        for (size_t i = 0; i < queris; i++)
+        {
+            int l, r, q;
+            cin >> l >> r >> q;
+            long long right = vec[vec.size() - 1] - vec[r - 1],
+                left,
+                substitue = (r - l + 1) * q;
+
+            if (l == 1)
+            {
+                left = 0;
+            }
+            else
+            {
+                left = vec[l - 2];
+            }
+            if ((right + left + substitue) % 2 == 0)
+            {
+                ans.push_back("NO");
+            }
+            else
+            {
+                ans.push_back("YES");
+            }
+        }
+    }
+
+    //while (q--)
+    //{
+    //    int l, r;
+    //    cin >> l >> r;
+    //    cout << vec[r] - vec[l - 1] << '\n';
+    //}
+
+	for (auto& i : ans)
+	{
+		cout << i << '\n';
+	}
+}
