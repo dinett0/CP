@@ -1,0 +1,102 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct Element {
+	Element* next = nullptr;
+	int data{};
+};
+
+class Stack {
+	Element* top;
+	int Size;
+
+public:
+	Stack() {
+		top = nullptr;
+		Size = 0;
+	}
+
+	void push(int x) {
+		Element* newnode = new Element;
+		newnode->data = x;
+		newnode->next = top;
+		top = newnode;
+		Size++;
+	}
+
+	void pop() {
+		if (top == nullptr)
+			cout << "error\n";
+		else {
+			cout << top->data << '\n';
+			Element* temp = top;
+			top = top->next;
+			delete temp;
+			Size--;
+		}
+	}
+
+	void back() {
+		if (top == nullptr)
+			cout << "error\n";
+		else
+			cout << top->data << '\n';
+	}
+
+	void size() {
+		cout << Size << '\n';
+	}
+
+	void clear() {
+		Element* temp;
+		while (top != nullptr) {
+			temp = top;
+			top = top->next;
+			delete temp;
+		}
+		//this->pop();
+		Size = 0;
+	}
+
+	void exit() {
+		cout << "bye";
+		return;
+	}
+};
+
+int main() {
+	Stack stack;
+	string token;
+	cin >> token;
+	while (token != "exit") {
+		switch (token[0])
+		{
+		case 'p':
+			if (token == "push") {
+				int value;
+				cin >> value;
+				stack.push(value);
+				cout << "ok\n";
+			}
+			else {
+				stack.pop();
+			}
+			break;
+		case 'b':
+			stack.back();
+			break;
+		case 's':
+			stack.size();
+			break;
+		case 'c':
+			stack.clear();
+			cout << "ok\n";
+			break;
+		default:
+			break;
+		}
+		cin >> token;
+	}
+	stack.exit();
+}
