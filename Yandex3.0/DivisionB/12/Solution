@@ -1,3 +1,9 @@
+//EDGE CASES:
+//			*Incoming bracket is closing and stack isEmpty
+//			*Stack is not Empty at the end
+//			*Incoming bracket doesnt match top bracket
+
+
 #include <iostream>
 #include <algorithm>
 #include <stack>
