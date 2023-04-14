@@ -1,0 +1,140 @@
+testcases:
+1: 	15
+	17
+	26 21 10 77 87 62 70 9 29 75 81 54 45 87 81
+	49 65 40 54 42 48 1 14 38 98 85 96 33 37 36 27 47
+
+2:	5
+	3
+	10 5 4 3 1
+	1 2 4
+
+3:	8
+	4
+	10 3 2 1 7 4 3 3
+	3 2 1
+
+4:	2 1
+	2 10
+	11
+
+
+1. IN WHILE INSTEAD OF || SHOULD BE &&
+2. IN WHILE SHOULD COMPARE SIZE OF offset, NOT inputP
+
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
+#include <iomanip>
+using namespace std;
+
+template<typename T>
+T random(T range_from, T range_to) {
+	std::random_device                  rand_dev;
+	std::mt19937                        generator(rand_dev());
+	std::uniform_int_distribution<T>    distr(range_from, range_to);
+	return distr(generator);
+}
+
+int main() {
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	std::cout.tie(0);
+
+	int platforms, guards;
+	cin >> platforms >> guards;
+	
+	auto start = chrono::high_resolution_clock::now();
+	vector<long long> offset, inputP, inputG;
+
+	for (size_t i = 0; i < platforms; i++) {
+		long long buff;
+		//cin >> buff;
+		buff = random(1ll, (long long)1e18);//
+		//cout << buff << " ";//
+
+		inputP.push_back(buff);
+	}
+
+	//cout << "\n\n\n";//
+
+	for (size_t i = 0; i < guards; i++) {
+		long long buff;
+		//cin >> buff;
+		buff = random(1ll, (long long)1e18);//
+		//cout << buff << " ";//
+
+		inputG.push_back(buff);
+	}
+
+	//cout << "\n\n\n";//
+	/// //////////////////////////////////////////////////////////////////////////////////
+
+	long long max{};
+	for (int i = inputP.size() - 1; i >= 0; i--) {
+		if (inputP[i] > max)
+		{
+			offset.push_back(inputP[i] - max);
+			max = inputP[i];
+		}
+	}
+
+	//cout << "Offsets:\n";/**/
+	//for (auto& i : offset)
+	//{
+	//	cout << i << " ";
+	//}
+	//cout << "\n";/**/
+
+	sort(inputG.begin(), inputG.end());
+	sort(offset.begin(), offset.end());
+
+	//cout << "Sorted offsets:\n";/**/
+	//for (auto& i : offset)
+	//{
+	//	cout << i << " ";
+	//}
+	//cout << "\n";/**/
+
+	//cout << "Sorted guards:\n";/**/
+	//for (auto& i : inputG)
+	//{
+	//	cout << i << " ";
+	//}
+	//cout << "\n\n\n";/**/
+
+	int p{}, g{}, ans{};
+	while (p != offset.size() && g != inputG.size())
+	{
+		//cout << p << " is less then size of offset: " << offset.size() << ", and " << g << " is less then size of inputG: " << inputG.size() << '\n';
+		if (offset[p] >= inputG[g])
+		{
+			//cout << "guard " << g << " with width: " << inputG[g] << " CAN fit in " << offset[p] << '\n';
+			p++;
+			g++;
+			ans++;
+			//cout << "p: " << p << ", g: " << g <<"\n\n";
+		}
+		else
+		{
+			//cout << "guard " << g << " with width: " << inputG[g] << " CANT fit in " << offset[p] << '\n';
+			p++;
+			//cout << "p: " << p << "\n\n";
+		}
+	}
+
+	cout << '\n' << ans;
+	auto end = chrono::high_resolution_clock::now();
+	double time_taken =
+		chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+
+	time_taken *= 1e-9;
+
+	cout << "\n\n\nTime taken by program is : " << fixed
+		<< time_taken << std::setprecision(9);
+	cout << " sec" << endl;
+}
