@@ -1,3 +1,4 @@
+//Reasoning: each new line should intersect with exisitng ones and produce a slice for each intersection
 #include <iostream>
 #include <fstream>
 using namespace std;
